@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Ingredients</title>
+    <!--Page that allows for editing of the inggredients based on what the user owns-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="container mx-auto py-12">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Your Ingredient List</h2>
+            <ul id="ingredientList" class="space-y-4">
+                <!-- Ingredients will be dynamically added here -->
+            </ul>
+            <p id="noIngredientsMessage" class="text-center text-blue-400 mt-8 hidden">No ingredients found. Please add some ingredients.</p>
+        </div>
+    </div>
+    <script>
+        // Sample data for demonstration purposes
+        let ingredients = [
+            { name: 'Milk', quantity: 2 },
+            { name: 'Eggs', quantity: 12 },
+            { name: 'Flour', quantity: 1 }
+        ];
+        const ingredientList = document.getElementById('ingredientList');
+        const noIngredientsMessage = document.getElementById('noIngredientsMessage');
+
+        function displayIngredients() {
+            ingredientList.innerHTML = '';
+            if (ingredients.length === 0) {
+                noIngredientsMessage.classList.remove('hidden');
+                return;
+            }
+            noIngredientsMessage.classList.add('hidden');
+            ingredients.forEach((ingredient, index) => {
+                const li = document.createElement('li');
+                li.className = 'bg-indigo-50 p-4 rounded-lg shadow-inner flex justify-between items-center';
+                li.innerHTML = `
+                            <span class="text-blue-700 font-semibold">${ingredient.name}</span>
+                            <span class="text-gray-600">Quantity: ${ingredient.quantity}</span>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick="removeIngredient(${index})">Remove</button>
+                        `;
+                ingredientList.appendChild(li);
+            });
+        }
+        function removeIngredient(index) {
+            ingredients.splice(index, 1);
+            displayIngredients();
+        }
+        displayIngredients();
+    </script>
+</body>
+</html>
